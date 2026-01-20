@@ -175,3 +175,24 @@ button:hover {
   }
 }
 
+/* Evita scroll lateral no celular */
+body {
+  overflow-x: hidden;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 768px) {
+  .cart {
+    width: calc(100% - 40px);
+    right: 20px;
+    left: 20px;
+    bottom: -100%;
+    transition: bottom 0.3s ease;
+  }
+
+  .cart.open {
+    bottom: 20px;
+  }
+}
+
+
