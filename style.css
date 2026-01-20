@@ -1,0 +1,177 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+  color: #333;
+}
+
+header {
+  background: linear-gradient(135deg, #ff9acb, #ff6fae);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  cursor: zoom-in;
+}
+
+.card-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.price {
+  color: #ff4f9a;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 8px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #ff6fae;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff4f9a;
+}
+
+.cart {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 15px;
+  width: 320px;
+}
+
+.cart-item {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.qty-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.qty-controls button {
+  width: auto;
+  padding: 4px 8px;
+}
+
+.remove {
+  background: #ccc;
+  color: #333;
+}
+
+.whatsapp {
+  background: #25D366;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+}
+
+.modal span {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+}
+
+.cart-button {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #ff6fae;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  z-index: 1001;
+}
+
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 320px;
+  height: 100vh;
+  background: white;
+  box-shadow: -6px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  padding: 15px;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.cart-panel.open {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .cart-panel {
+    width: 100%;
+  }
+}
+

@@ -4,29 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo de Laços</title>
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: #f7f7f7; color: #333; }
-    header { background: linear-gradient(135deg, #ff9acb, #ff6fae); color: white; padding: 20px; text-align: center; }
-    .container { padding: 20px; max-width: 1100px; margin: auto; }
-    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-    .card { background: white; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); overflow: hidden; }
-    .card img { width: 100%; height: 220px; object-fit: cover; }
-    .card-content { padding: 15px; text-align: center; }
-    .price { color: #ff4f9a; font-weight: bold; }
-    button { margin-top: 8px; padding: 10px; width: 100%; border: none; border-radius: 8px; background: #ff6fae; color: white; cursor: pointer; }
-    button:hover { background: #ff4f9a; }
-    .cart { position: fixed; right: 20px; bottom: 20px; background: white; border-radius: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); padding: 15px; width: 320px; }
-    .cart-item { font-size: 14px; margin-bottom: 10px; }
-    .qty-controls { display: flex; gap: 6px; margin-top: 4px; }
-    .qty-controls button { width: auto; padding: 4px 8px; }
-    .remove { background: #ccc; color: #333; }
-    .whatsapp { background: #25D366; }
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; }
-    .modal img { max-width: 90%; max-height: 90%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-    .modal span { position: absolute; top: 20px; right: 30px; font-size: 32px; color: white; cursor: pointer; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header>
   <h1>🎀 Catálogo de Laços</h1>
   <p>Escolha seus laços e finalize pelo WhatsApp</p>
@@ -34,108 +15,53 @@
 
 <div class="container">
   <div class="products">
+
     <div class="card">
-      <img 
-            src="fotos/lacoverde.jpeg " 
-            onclick="openModal(this.src)"
-            style="cursor: zoom-in;"
-        />
+      <img src="fotos/lacoverde.jpeg" onclick="openModal(this.src)">
       <div class="card-content">
         <h3>Laço De Tecido Verde</h3>
         <div class="price">R$ 29,00</div>
         <button onclick="addToCart('Laço de Tecido Verde', 29)">Adicionar</button>
       </div>
     </div>
+
     <div class="card">
-      <img 
-            src="fotos/123.jpg " 
-            onclick="openModal(this.src)"
-            style="cursor: zoom-in;"
-        />
+      <img src="fotos/123.jpg" onclick="openModal(this.src)">
       <div class="card-content">
         <h3>Laço Boutique</h3>
         <div class="price">R$ 24,00</div>
         <button onclick="addToCart('Laço Boutique', 24)">Adicionar</button>
       </div>
     </div>
+
   </div>
 </div>
 
-<div class="cart">
-  <h3>🛒 Carrinho</h3>
+<!-- Botão do carrinho -->
+<div class="cart-button" onclick="toggleCart()">
+  🛒 Carrinho (<span id="cartCount">0</span>)
+</div>
+
+<!-- Painel do carrinho -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>🛒 Seu pedido</h3>
+    <span class="close" onclick="toggleCart()">✖</span>
+  </div>
+
   <div id="cartItems"></div>
   <div id="total"></div>
-  <button class="whatsapp" onclick="checkout()">Finalizar no WhatsApp</button>
+
+  <button class="whatsapp" onclick="checkout()">
+    Finalizar no WhatsApp
+  </button>
 </div>
 
 <div class="modal" id="imageModal" onclick="closeModal()">
-    <span>&times;</span>
-    <img id="modalImg" />
+  <span>&times;</span>
+  <img id="modalImg">
 </div>
 
-<script>
-
-  function openModal(src) {
-    document.getElementById('modalImg').src = src;
-    document.getElementById('imageModal').style.display = 'flex';
-}
-
-
-  function closeModal() {
-    document.getElementById('imageModal').style.display = 'none';
-}
-
-  let cart = [];
-
-  function addToCart(name, price) {
-    const item = cart.find(i => i.name === name);
-    if(item) item.qty++;
-    else cart.push({ name, price, qty: 1 });
-    renderCart();
-  }
-
-  function changeQty(index, delta) {
-    cart[index].qty += delta;
-    if(cart[index].qty <= 0) cart.splice(index, 1);
-    renderCart();
-  }
-
-  function renderCart() {
-    const el = document.getElementById('cartItems');
-    el.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, index) => {
-      total += item.price * item.qty;
-      el.innerHTML += `
-        <div class="cart-item">
-          <strong>${item.name}</strong><br>
-          R$ ${item.price},00 x ${item.qty}
-          <div class="qty-controls">
-            <button onclick="changeQty(${index}, -1)">-</button>
-            <button onclick="changeQty(${index}, 1)">+</button>
-            <button class="remove" onclick="changeQty(${index}, -${item.qty})">Excluir</button>
-          </div>
-        </div>`;
-    });
-
-    document.getElementById('total').innerText = 'Total: R$ ' + total + ',00';
-  }
-
-  function checkout() {
-    if(cart.length === 0) return alert('Carrinho vazio');
-
-    let msg = 'Olá! Gostaria de fazer um pedido 🎀%0A%0A';
-    let total = 0;
-
-    cart.forEach(item => {
-      msg += `• ${item.name} - ${item.qty}x - R$ ${item.price * item.qty},00%0A`;
-      total += item.price * item.qty;
-    });
-
-    msg += `%0A💰 Total: R$ ${total},00`;
-    window.open('https://wa.me/5548996220648?text=' + msg, '_blank');
-  }
-</script>
+<script src="script.js"></script>
 </body>
 </html>
