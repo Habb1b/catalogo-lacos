@@ -72,6 +72,10 @@ function renderCart() {
   updateCartCount();
 }
 
+function toggleCart() {
+  document.querySelector('.cart').classList.toggle('open');
+}
+
 function checkout() {
   if (cart.length === 0) {
     alert('Carrinho vazio');
@@ -93,3 +97,4 @@ function checkout() {
     '_blank'
   );
 }
+
